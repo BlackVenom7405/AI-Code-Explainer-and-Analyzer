@@ -1,0 +1,29 @@
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+.venv/
+
+# IDE
+.vscode/
+
+# Local databases
+*.db
+
+# Logs
+*.log
+
+# Uploads
+uploads/
+
+# Secrets / credentials
+*.json
+!package.json
+!package-lock.json
