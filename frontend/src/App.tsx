@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ThemeProvider } from './context/ThemeContext';
 import { SettingsProvider } from './context/SettingsContext';
 import { ToastProvider } from './components/ui/Toast';
@@ -19,13 +20,7 @@ export const App: React.FC = () => {
             <div className="flex flex-col min-h-screen bg-background text-foreground">
               <Navbar />
               <main className="flex-1">
-                <Routes>
-                  <Route path="/" element={<LandingPage />} />
-                  <Route path="/analyzer" element={<AnalyzerPage />} />
-                  <Route path="/dashboard" element={<DashboardPage />} />
-                  <Route path="/history" element={<HistoryPage />} />
-                  <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
+                <AnimatedRoutes />
               </main>
               <Footer />
             </div>
@@ -36,6 +31,33 @@ export const App: React.FC = () => {
         </ToastProvider>
       </SettingsProvider>
     </ThemeProvider>
+  );
+};
+
+const PageTransition: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -8 }}
+    transition={{ duration: 0.24, ease: 'easeOut' }}
+  >
+    {children}
+  </motion.div>
+);
+
+const AnimatedRoutes: React.FC = () => {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageTransition><LandingPage /></PageTransition>} />
+        <Route path="/analyzer" element={<PageTransition><AnalyzerPage /></PageTransition>} />
+        <Route path="/dashboard" element={<PageTransition><DashboardPage /></PageTransition>} />
+        <Route path="/history" element={<PageTransition><HistoryPage /></PageTransition>} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </AnimatePresence>
   );
 };
 

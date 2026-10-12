@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import { MonacoCodeEditor } from '../components/editor/MonacoCodeEditor';
 import { EditorToolbar } from '../components/editor/EditorToolbar';
 import { AnalysisTabs, TabId } from '../components/analysis/AnalysisTabs';
@@ -227,48 +228,26 @@ export const AnalyzerPage: React.FC = () => {
               />
 
               <div className="flex-1 p-5 overflow-y-auto">
-                {activeTab === 'overview' && (
-                  <OverviewTab analysis={parsedAnalysisResult} language={language} />
-                )}
-                {activeTab === 'explanation' && (
-                  <ExplanationTab analysis={parsedAnalysisResult} />
-                )}
-                {activeTab === 'bugs' && (
-                  <BugsTab analysis={parsedAnalysisResult} />
-                )}
-                {activeTab === 'security' && (
-                  <SecurityTab analysis={parsedAnalysisResult} />
-                )}
-                {activeTab === 'complexity' && (
-                  <ComplexityTab complexity={parsedAnalysisResult.complexity} />
-                )}
-                {activeTab === 'quality' && (
-                  <QualityTab quality={parsedAnalysisResult.quality} />
-                )}
-                {activeTab === 'optimization' && (
-                  <OptimizationTab analysis={parsedAnalysisResult} />
-                )}
-                {activeTab === 'refactor' && (
-                  <RefactorTab
-                    analysis={parsedAnalysisResult}
-                    originalCode={code}
-                    language={language}
-                  />
-                )}
-                {activeTab === 'documentation' && (
-                  <DocumentationPanel
-                    initialDocumentation={parsedAnalysisResult.documentation || ''}
-                    code={code}
-                    language={language}
-                  />
-                )}
-                {activeTab === 'chat' && (
-                  <ChatPanel
-                    code={code}
-                    language={language}
-                    analysisContext={JSON.stringify(parsedAnalysisResult.summary)}
-                  />
-                )}
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={activeTab}
+                    initial={{ opacity: 0, x: 8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -8 }}
+                    transition={{ duration: 0.18, ease: 'easeOut' }}
+                  >
+                    {activeTab === 'overview' && <OverviewTab analysis={parsedAnalysisResult} language={language} />}
+                    {activeTab === 'explanation' && <ExplanationTab analysis={parsedAnalysisResult} />}
+                    {activeTab === 'bugs' && <BugsTab analysis={parsedAnalysisResult} />}
+                    {activeTab === 'security' && <SecurityTab analysis={parsedAnalysisResult} />}
+                    {activeTab === 'complexity' && <ComplexityTab complexity={parsedAnalysisResult.complexity} />}
+                    {activeTab === 'quality' && <QualityTab quality={parsedAnalysisResult.quality} />}
+                    {activeTab === 'optimization' && <OptimizationTab analysis={parsedAnalysisResult} />}
+                    {activeTab === 'refactor' && <RefactorTab analysis={parsedAnalysisResult} originalCode={code} language={language} />}
+                    {activeTab === 'documentation' && <DocumentationPanel initialDocumentation={parsedAnalysisResult.documentation || ''} code={code} language={language} />}
+                    {activeTab === 'chat' && <ChatPanel code={code} language={language} analysisContext={JSON.stringify(parsedAnalysisResult.summary)} />}
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </div>
           ) : (

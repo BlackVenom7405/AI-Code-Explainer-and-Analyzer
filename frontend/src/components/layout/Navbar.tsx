@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import { 
   Code2, 
   LayoutDashboard, 
@@ -56,7 +57,7 @@ export const Navbar: React.FC = () => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
+                  className={`nav-link flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
                     isActive
                       ? 'bg-primary/10 text-primary'
                       : 'text-muted-foreground hover:text-foreground hover:bg-muted'
@@ -81,24 +82,26 @@ export const Navbar: React.FC = () => {
             </Link>
 
             {/* Theme Toggle */}
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-xl border border-border text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-              title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-              aria-label="Toggle theme"
-            >
-              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
-            </button>
+              <motion.button
+                onClick={toggleTheme}
+                className="p-2 rounded-xl border border-border text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                aria-label="Toggle theme"
+                whileTap={{ scale: 0.9, rotate: 12 }}
+              >
+                {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
+              </motion.button>
 
             {/* Settings Trigger */}
-            <button
+            <motion.button
               onClick={() => setIsSettingsOpen(true)}
               className="p-2 rounded-xl border border-border text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
               title="Settings"
               aria-label="Open settings"
+              whileTap={{ scale: 0.9 }}
             >
               <Settings className="w-4 h-4" />
-            </button>
+            </motion.button>
 
             {/* Mobile menu toggle */}
             <button
@@ -112,8 +115,15 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Navigation Drawer */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden border-b border-border bg-card px-4 py-3 space-y-1">
+        <AnimatePresence initial={false}>
+          {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="md:hidden border-b border-border bg-card px-4 py-3 space-y-1 overflow-hidden"
+          >
             {navLinks.map((link) => {
               const Icon = link.icon;
               const isActive = location.pathname === link.path;
@@ -142,8 +152,9 @@ export const Navbar: React.FC = () => {
                 <Plus className="w-4 h-4" /> New Analysis
               </Link>
             </div>
-          </div>
-        )}
+          </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       {/* Settings Modal */}

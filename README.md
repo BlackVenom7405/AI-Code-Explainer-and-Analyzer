@@ -1,4 +1,4 @@
-# CodeLens AI 🔍⚡
+﻿# CodeLens AI ðŸ”âš¡
 
 > **Understand. Analyze. Improve. Your Code.**
 
@@ -6,7 +6,7 @@ CodeLens AI is a modern, full-stack AI-powered source code explanation, security
 
 ---
 
-## 🌟 Key Capabilities
+## ðŸŒŸ Key Capabilities
 
 1. **Multi-Vector AI Analysis**:
    - Executive summary and core domain purpose.
@@ -43,7 +43,7 @@ CodeLens AI is a modern, full-stack AI-powered source code explanation, security
 
 ---
 
-## 🛡️ Security Guarantee
+## ðŸ›¡ï¸ Security Guarantee
 
 - **Zero Code Execution**: Source files are strictly treated as read-only plain text.
 - **No dynamic execution**: `eval()`, `exec()`, and `subprocess` are never used.
@@ -51,7 +51,7 @@ CodeLens AI is a modern, full-stack AI-powered source code explanation, security
 
 ---
 
-## 🛠️ Technology Stack
+## ðŸ› ï¸ Technology Stack
 
 - **Frontend**: React 18, TypeScript, Vite, Monaco Editor, Tailwind CSS, Framer Motion, Recharts, Lucide React, Canvas Confetti.
 - **Backend**: Python 3.12+, FastAPI, Pydantic v2, SQLAlchemy 2.0, ReportLab, Google Gemini API (`gemini-1.5-flash`), Uvicorn.
@@ -59,7 +59,36 @@ CodeLens AI is a modern, full-stack AI-powered source code explanation, security
 
 ---
 
-## 🚀 Quick Start Guide
+## ⚡ One-Click / Single-File Launch (Recommended)
+
+Run the entire full-stack project (FastAPI backend + Vite React frontend) with a single file:
+
+### Option 1: Python Single File
+`ash
+python run.py
+`
+
+### Option 2: Windows Double-Click
+Simply double-click **un.bat** in Windows File Explorer!
+
+### Option 3: PowerShell
+`powershell
+.\run.ps1
+`
+
+This single command will:
+- Check Python and Node.js prerequisites
+- Auto-configure .env from .env.example if needed
+- Auto-install frontend dependencies (
+pm install) if needed
+- Start the FastAPI backend at http://127.0.0.1:8000
+- Start the Vite frontend at http://localhost:5173
+- Auto-launch your default browser to http://localhost:5173
+- Cleanly stop both processes when you press Ctrl+C
+
+---
+
+## 🛠️ Manual Step-by-Step Setup
 
 ### 1. Backend Setup
 
@@ -83,7 +112,7 @@ Visit **`http://localhost:5173`** in your browser.
 
 ---
 
-## 🧪 Testing
+## ðŸ§ª Testing
 
 Run backend test suite:
 
@@ -96,3 +125,5 @@ Build frontend production bundle:
 ```bash
 cd frontend && npm run build
 ```
+
+

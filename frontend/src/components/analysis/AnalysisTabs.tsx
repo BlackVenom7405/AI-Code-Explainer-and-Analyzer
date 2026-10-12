@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { 
   Sparkles, 
   FileText, 
@@ -70,7 +71,7 @@ export const AnalysisTabs: React.FC<AnalysisTabsProps> = ({ activeTab, onTabChan
         const isActive = activeTab === tab.id;
 
         return (
-          <button
+          <motion.button
             key={tab.id}
             onClick={() => onTabChange(tab.id as TabId)}
             className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
@@ -78,6 +79,8 @@ export const AnalysisTabs: React.FC<AnalysisTabsProps> = ({ activeTab, onTabChan
                 ? 'bg-card text-foreground shadow-sm border border-border/80'
                 : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'
             }`}
+            whileHover={{ y: -1 }}
+            whileTap={{ scale: 0.96 }}
           >
             <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-primary' : ''}`} />
             <span>{tab.label}</span>
@@ -86,7 +89,7 @@ export const AnalysisTabs: React.FC<AnalysisTabsProps> = ({ activeTab, onTabChan
                 {tab.count}
               </span>
             )}
-          </button>
+          </motion.button>
         );
       })}
     </div>
